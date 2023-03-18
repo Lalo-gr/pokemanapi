@@ -8,7 +8,17 @@ function App() {
   
   const[pokemonName, setPokemonName] = useState("");
 
-  const[pokemon, setPokemon] = useState({})
+  const[pokemonChosen, setPokemonChosen] = useState(false);
+
+  const[pokemon, setPokemon] = useState({
+      name: "", 
+      species: "", 
+      img: "", 
+      hp: "",
+      attack: "",
+      defense: "",
+      type: "",
+    })
 
 
   const searchPokemon = () =>{
@@ -17,12 +27,16 @@ function App() {
         name: pokemonName, 
         species: response.data.species.name, 
         img: response.data.sprites.frton_default, 
-        hp: response.data.stats[0].base_stat})
+        hp: response.data.stats[0].base_stat,
+        attack: response.data.stats[1].base_stat,
+        defense: response.data.statsp[2].base_stat,
+        type: response.data.types[0].type.name,
+      })
+      setpokemonChosen(true);
     }).catch((err) => {
       
     });
   }
-
 
 
   return(
@@ -33,6 +47,9 @@ function App() {
       }}
       />
       <button onClick={searchPokemon}>Search Pokeman</button>
+    </div>
+    <div className="DisplaySection">
+      {!pokemonChosen ? (<h1>Please choose a pokemon</h1>): <h1>{pokemonName}</h1>}
     </div>
     </div>
     );
